@@ -104,20 +104,20 @@ WSGI_APPLICATION = 'student_api.wsgi.application'
 #
 # Credentials are loaded from the .env file — never hardcode them here.
 # Add these to your .env file:
-#   DB_NAME=bookshelf
+#   DB_NAME=student_db
 #   DB_USER=postgres
-#   DB_PASSWORD=Root@123
+#   DB_PASSWORD=Root123
 #   DB_HOST=localhost
-#   DB_PORT=5432
+#   DB_PORT=5433
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME':     os.getenv('DB_NAME',     'bookshelf'),
+        'NAME':     os.getenv('DB_NAME',     'student_db'),
         'USER':     os.getenv('DB_USER',     'postgres'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'Root@123'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'Root123'),
         'HOST':     os.getenv('DB_HOST',     'localhost'),
-        'PORT':     os.getenv('DB_PORT',     '5432'),
+        'PORT':     os.getenv('DB_PORT',     '5433'),
     }
 }
 
