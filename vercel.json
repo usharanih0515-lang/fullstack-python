@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "student_api/student_api/wsgi.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxDuration": 60
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "student_api/staticfiles/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "student_api/student_api/wsgi.py"
+    }
+  ]
+}

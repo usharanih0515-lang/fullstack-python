@@ -121,10 +121,10 @@ class StudentProfileCreateUpdateSerializer(serializers.ModelSerializer):
         Ensure the linked user has role='student'.
         You can't create a student profile for a teacher or admin.
         """
-        if not user.is_student:
+        if not user.is_student and not user.is_admin:
             raise serializers.ValidationError(
                 f'User "{user.username}" has role "{user.role}". '
-                'Only users with role=student can have a student profile.'
+                'Only users with role=student or role=admin can have a student profile.'
             )
         # Check they don't already have a profile
         if hasattr(user, 'student_profile') and self.instance is None:

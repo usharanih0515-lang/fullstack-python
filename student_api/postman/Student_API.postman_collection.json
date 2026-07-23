@@ -36,7 +36,7 @@
             "header": [{"key": "Content-Type", "value": "application/json"}],
             "body": {"mode": "raw", "raw": "{\n  \"username\": \"student1\",\n  \"password\": \"TestPass123!\"\n}"}
           },
-          "event": [{"listen": "test", "script": {"exec": ["pm.test('Status 200', () => pm.response.to.have.status(200));", "const j = pm.response.json();", "if (j.access) { pm.environment.set('access_token', j.access); pm.environment.set('refresh_token', j.refresh); console.log('Tokens saved'); }"]}}]
+          "event": [{"listen": "test", "script": {"exec": ["pm.test('Status 200', () => pm.response.to.have.status(200));", "const j = pm.response.json();", "if (j.access) { pm.collectionVariables.set('access_token', j.access); pm.collectionVariables.set('refresh_token', j.refresh); console.log('Tokens saved'); }"]}}]
         },
         {
           "name": "Refresh Token",
@@ -46,7 +46,7 @@
             "header": [{"key": "Content-Type", "value": "application/json"}],
             "body": {"mode": "raw", "raw": "{\n  \"refresh\": \"{{refresh_token}}\"\n}"}
           },
-          "event": [{"listen": "test", "script": {"exec": ["pm.test('Status 200', () => pm.response.to.have.status(200));", "const j = pm.response.json();", "if (j.access) { pm.environment.set('access_token', j.access); pm.environment.set('refresh_token', j.refresh); }"]}}]
+          "event": [{"listen": "test", "script": {"exec": ["pm.test('Status 200', () => pm.response.to.have.status(200));", "const j = pm.response.json();", "if (j.access) { pm.collectionVariables.set('access_token', j.access); pm.collectionVariables.set('refresh_token', j.refresh); }"]}}]
         },
         {
           "name": "Logout",
@@ -117,7 +117,7 @@
             "header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Authorization", "value": "Bearer {{access_token}}"}],
             "body": {"mode": "raw", "raw": "{\n  \"name\": \"Computer Science\",\n  \"description\": \"Department of Computer Science and Engineering\",\n  \"head_of_department\": \"Dr. Jane Doe\"\n}"}
           },
-          "event": [{"listen": "test", "script": {"exec": ["pm.test('Created or 403', () => { pm.expect([201, 403]).to.include(pm.response.code); });", "if (pm.response.code === 201) { pm.environment.set('department_id', pm.response.json().id); }"]}}]
+          "event": [{"listen": "test", "script": {"exec": ["pm.test('Created or 403', () => { pm.expect([201, 403]).to.include(pm.response.code); });", "if (pm.response.code === 201) { pm.collectionVariables.set('department_id', pm.response.json().id); }"]}}]
         },
         {
           "name": "Get Department Detail",
@@ -167,7 +167,7 @@
             "header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Authorization", "value": "Bearer {{access_token}}"}],
             "body": {"mode": "raw", "raw": "{\n  \"user\": 2,\n  \"student_id\": \"STU-2024-001\",\n  \"department\": {{department_id}},\n  \"year_level\": \"1\",\n  \"status\": \"active\"\n}"}
           },
-          "event": [{"listen": "test", "script": {"exec": ["if (pm.response.code === 201) { pm.environment.set('student_id', pm.response.json().id); }", "pm.test('Created or 403', () => { pm.expect([201, 400, 403]).to.include(pm.response.code); });"]}}]
+          "event": [{"listen": "test", "script": {"exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('student_id', pm.response.json().id); }", "pm.test('Created or 403', () => { pm.expect([201, 400, 403]).to.include(pm.response.code); });"]}}]
         },
         {
           "name": "Get My Student Profile",
@@ -234,7 +234,7 @@
             "header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Authorization", "value": "Bearer {{access_token}}"}],
             "body": {"mode": "raw", "raw": "{\n  \"course_code\": \"CS101\",\n  \"title\": \"Introduction to Programming\",\n  \"description\": \"Fundamentals of programming using Python.\",\n  \"department\": {{department_id}},\n  \"credits\": 3,\n  \"max_students\": 30,\n  \"status\": \"active\",\n  \"start_date\": \"2024-09-01\",\n  \"end_date\": \"2024-12-15\"\n}"}
           },
-          "event": [{"listen": "test", "script": {"exec": ["pm.test('Created or 403', () => { pm.expect([201, 403]).to.include(pm.response.code); });", "if (pm.response.code === 201) { pm.environment.set('course_id', pm.response.json().id); }"]}}]
+          "event": [{"listen": "test", "script": {"exec": ["pm.test('Created or 403', () => { pm.expect([201, 403]).to.include(pm.response.code); });", "if (pm.response.code === 201) { pm.collectionVariables.set('course_id', pm.response.json().id); }"]}}]
         },
         {
           "name": "Get Course Detail",
@@ -275,7 +275,7 @@
             "header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Authorization", "value": "Bearer {{access_token}}"}],
             "body": {"mode": "raw", "raw": "{\n  \"student\": {{student_id}},\n  \"course\": {{course_id}},\n  \"notes\": \"Standard enrollment\"\n}"}
           },
-          "event": [{"listen": "test", "script": {"exec": ["pm.test('Created or 400/403', () => { pm.expect([201, 400, 403]).to.include(pm.response.code); });", "if (pm.response.code === 201) { pm.environment.set('enrollment_id', pm.response.json().id); }"]}}]
+          "event": [{"listen": "test", "script": {"exec": ["pm.test('Created or 400/403', () => { pm.expect([201, 400, 403]).to.include(pm.response.code); });", "if (pm.response.code === 201) { pm.collectionVariables.set('enrollment_id', pm.response.json().id); }"]}}]
         },
         {
           "name": "My Enrollments",
@@ -337,7 +337,7 @@
             "header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Authorization", "value": "Bearer {{access_token}}"}],
             "body": {"mode": "raw", "raw": "{\n  \"student\": {{student_id}},\n  \"course\": {{course_id}},\n  \"score\": \"87.50\",\n  \"remarks\": \"Excellent work on the final project\"\n}"}
           },
-          "event": [{"listen": "test", "script": {"exec": ["pm.test('Created or 400/403', () => { pm.expect([201, 400, 403]).to.include(pm.response.code); });", "if (pm.response.code === 201) { pm.environment.set('grade_id', pm.response.json().id); const j = pm.response.json(); pm.test('Letter grade auto-computed', () => pm.expect(j.letter_grade).to.equal('B+')); }"]}}]
+          "event": [{"listen": "test", "script": {"exec": ["pm.test('Created or 400/403', () => { pm.expect([201, 400, 403]).to.include(pm.response.code); });", "if (pm.response.code === 201) { pm.collectionVariables.set('grade_id', pm.response.json().id); const j = pm.response.json(); pm.test('Letter grade auto-computed', () => pm.expect(j.letter_grade).to.equal('B+')); }"]}}]
         },
         {
           "name": "Get Grade Detail",

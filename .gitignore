@@ -39,3 +39,6 @@ desktop.ini
 # Student API docs and README
 student_api/README.md
 student_api/docs/
+
+.vercel
+.env*

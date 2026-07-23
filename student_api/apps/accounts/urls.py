@@ -24,10 +24,10 @@ urlpatterns = [
 
     # JWT Authentication
     # POST {"username": "...", "password": "..."} → {"access": "...", "refresh": "..."}
-    path('auth/login/', TokenObtainPairView.as_view(), name='login'),
+    path('auth/login/', TokenObtainPairView.as_view(authentication_classes=[]), name='login'),
 
     # POST {"refresh": "..."} → {"access": "...", "refresh": "..."} (rotated)
-    path('auth/refresh/', TokenRefreshView.as_view(), name='token-refresh'),
+    path('auth/refresh/', TokenRefreshView.as_view(authentication_classes=[]), name='token-refresh'),
 
     # POST {"refresh": "..."} → blacklists the token (logout)
     path('auth/logout/', TokenBlacklistView.as_view(), name='logout'),

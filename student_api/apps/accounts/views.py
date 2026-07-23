@@ -23,6 +23,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 
+from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import (
     UserRegistrationSerializer,
     UserProfileSerializer,
@@ -34,6 +35,12 @@ from .permissions import IsAdminUser
 User = get_user_model()
 
 
+
+
+
+
+
+
 class UserRegistrationView(generics.CreateAPIView):
     """
     POST /api/v1/auth/register/
@@ -43,6 +50,7 @@ class UserRegistrationView(generics.CreateAPIView):
     """
     serializer_class = UserRegistrationSerializer
     permission_classes = [AllowAny]
+    authentication_classes = []
 
     @extend_schema(
         summary='Register a new user',
